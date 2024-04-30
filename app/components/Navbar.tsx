@@ -5,11 +5,17 @@ import { Button } from "@/components/ui/button"
 import { ModeToggle } from './ThemeToggle';
 import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
+import { LogOut, User } from 'lucide-react';
+
+import { DropdownMenu } from "@/components/ui/dropdown-menu";
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { MenuIcon } from "lucide-react";
+import { UserDropdown } from './Dropdown';
 
 
 
 
-export function Navbar() {
+export async function Navbar() {
     const {getUser} = getKindeServerSession()
     const user  = await getUser();
 
@@ -22,9 +28,20 @@ export function Navbar() {
         </Link>
             
         <div className='items-center flex flex-row gap-x-4'>
-            <Button variant='secondary' asChild><RegisterLink>Sign Up</RegisterLink></Button> 
-            <Button asChild><LoginLink>Log In</LoginLink></Button>    
+            {user ? (
+                <div className='flex flex-row items-center gap-x-2'>
+                   <Button>Log Out</Button>
+                   <UserDropdown userImg={user.picture}/> 
+                </div>
+            ) : (
+                
+            <div className='items-center flex flex-row gap-x-4'>
+                <Button variant='secondary' asChild><RegisterLink>Sign Up</RegisterLink></Button> 
+                <Button asChild><LoginLink>Log In</LoginLink></Button>    
+            </div>   
+            )}
             <ModeToggle/>
+            
 
         </div>    
         
