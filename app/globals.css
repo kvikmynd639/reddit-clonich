@@ -59,3 +59,6 @@
       @apply bg-background text-foreground;
     }
   }
+  .ProseMirror:focus{
+    outline:none;
+  }
