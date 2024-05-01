@@ -1,4 +1,4 @@
-import { Card, CardHeader } from "@/components/ui/card";
+import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import Image from 'next/image'
 import redDude from '../../../../public/character.png'
 import Link from 'next/link'
@@ -8,6 +8,8 @@ import { Text, Video } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TextEditor } from "@/app/components/TextEditor";
+import { SubmitBtn } from "@/app/components/SubmitBtns";
+import { UploadDropzone } from "@uploadthing/react";
 
 
 const redditRules = [
@@ -47,7 +49,19 @@ export default function CreatePostRoute({params}: {params: {id:string}}) {
                                     <Input required name="title" placeholder="Create a new post"/>
                                     <TextEditor/>
                                 </CardHeader>
+                                <CardFooter>
+                                    <SubmitBtn text="Submit post"/>
+                                </CardFooter>
                             </form>
+                           
+                        </Card>
+
+                    </TabsContent>
+                    <TabsContent value="media">
+                        <Card>
+                            <CardHeader>
+                                {/*<UploadDropzone endpoint="imageUploader" onUploadError={}/>*/}
+                            </CardHeader>
                         </Card>
 
                     </TabsContent>

@@ -11,7 +11,13 @@ export const Menubar = ({editor} : {editor : Editor | null }) => {
 
     return (
         <div className="flex flex-wrap gap-6">
-            <Button type='button'>H1</Button>
+            <Button type='button' onClick={()=> editor.chain().focus().toggleHeading({level:1}).run()} variant="secondary">H1</Button>
+            <Button type='button' onClick={()=> editor.chain().focus().toggleHeading({level:2}).run()} variant="secondary">H2</Button>
+            <Button type='button' onClick={()=> editor.chain().focus().toggleHeading({level:3}).run()} variant="secondary">H3</Button>
+            <Button type='button' onClick={()=> editor.chain().focus().toggleBold().run()} variant="secondary">B</Button>
+            <Button type='button' onClick={()=> editor.chain().focus().toggleItalic().run()} variant="secondary">I</Button>
+            <Button type='button' onClick={()=> editor.chain().focus().toggleStrike().run()} variant="secondary">Strike</Button>
+
         </div>
 
 )
@@ -20,7 +26,12 @@ export const Menubar = ({editor} : {editor : Editor | null }) => {
 export function TextEditor() {
     const editor = useEditor({
         extensions: [StarterKit],
-        content: '<p>Hello world</p>'
+        content: '<p>Hello world</p>',
+        editorProps: {
+            attributes: {
+                class: "prose",
+            }
+        }
     });
     return(
         <div>
