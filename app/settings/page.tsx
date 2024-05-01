@@ -1,6 +1,6 @@
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 import prisma from '../lib/db';
-import {redirect} from 'next/navigation';
+import { redirect } from 'next/navigation'; 
 import { SettingsForm } from '../components/SettingsForm';
 
 async function getData(userId: string) {
@@ -9,25 +9,23 @@ async function getData(userId: string) {
             id: userId,
         },
         select: {
-            userName: true
-        },
+            userName: true,
+        }
     });
     return data;
 }
 
-
 export default async function Settings() {
-    const {getUser} = getKindeServerSession()
-    const user = await getUser()
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
     if (!user) {
-        return redirect("/api/auth/login")
+        return redirect("/api/auth/login"); 
     }
     const data = await getData(user.id);
-    return(
-        <div className='max-w-[1000px] mx-auto mt-4 flex flex-col'>
-            <SettingsForm/>
-          
-        </div>
 
+    return (
+        <div className='max-w-[1000px] mt-4 mx-auto flex flex-col'>
+            <SettingsForm username={data?.userName}/>
+        </div>
     );
 }

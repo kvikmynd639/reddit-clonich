@@ -36,10 +36,10 @@ export function UserDropdown({userImg}: userProps) {
                     <Link href="/r/create" className="w-full">Create a Community</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                    <Link href="/r/create" className="w-full">Create a Post</Link>
+                    <Link href="/r/post" className="w-full">Create a Post</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                    <Link href="/r/settings" className="w-full">Settings</Link>
+                    <Link href="/settings" className="w-full">Settings</Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator/>
