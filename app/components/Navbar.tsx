@@ -30,7 +30,6 @@ export async function Navbar() {
         <div className='items-center flex flex-row gap-x-4'>
             {user ? (
                 <div className='flex flex-row items-center gap-x-2'>
-                   <Button>Log Out</Button>
                    <UserDropdown userImg={user.picture}/> 
                 </div>
             ) : (

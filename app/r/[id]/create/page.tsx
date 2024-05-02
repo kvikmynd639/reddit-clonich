@@ -1,3 +1,4 @@
+"use client"
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import Image from 'next/image'
 import redDude from '../../../../public/character.png'
@@ -10,6 +11,9 @@ import { Label } from "@/components/ui/label";
 import { TextEditor } from "@/app/components/TextEditor";
 import { SubmitBtn } from "@/app/components/SubmitBtns";
 import { UploadDropzone } from "@uploadthing/react";
+import { useState } from "react";
+import { createPost } from "@/app/actions";
+import { JSONContent } from "@tiptap/react";
 
 
 const redditRules = [
@@ -26,6 +30,13 @@ const redditRules = [
   
 
 export default function CreatePostRoute({params}: {params: {id:string}}) {
+    const[title, setTitle] = useState<null | string>(null)
+    
+    const [imgUrl, setImgUrl] = useState<null | string>(null);
+    const [json, setJson]  = useState<null | JSONContent>(null)
+
+    const createRedditPost = createPost.bind(null, {jsonContent: json})
+
     return(
         <div className="max-w-[1000px] mx-auto mt-4 flex gap-x-4">
             <div className="w-[65%] flex flex-col gap-y-5">
@@ -43,11 +54,15 @@ export default function CreatePostRoute({params}: {params: {id:string}}) {
                     </TabsList>
                     <TabsContent value="post">
                         <Card>
-                            <form>
+                            <form action={createRedditPost}>
+                                <input type="hidden" name="imgUrl" value={imgUrl ?? undefined}/>
+                                <input type="hidden" name="subName" value={params.id}/>
                                 <CardHeader>
                                     <Label>Post name </Label>
-                                    <Input required name="title" placeholder="Create a new post"/>
-                                    <TextEditor/>
+                                    <Input required name="title" placeholder="Create a new post" 
+                                    value={title ?? undefined} 
+                                    onChange={(e) => setTitle(e.target.value)}/>
+                                    <TextEditor setJson={setJson} json={json}/>
                                 </CardHeader>
                                 <CardFooter>
                                     <SubmitBtn text="Submit post"/>
@@ -60,7 +75,22 @@ export default function CreatePostRoute({params}: {params: {id:string}}) {
                     <TabsContent value="media">
                         <Card>
                             <CardHeader>
-                                {/*<UploadDropzone endpoint="imageUploader" onUploadError={}/>*/}
+                               {imgUrl === null ? (
+                                 <UploadDropzone 
+                                 className="ut-button:bg-primary ut-button:ut-readying:bg-primary/50 ut-label:text-primary 
+                                 ut-button:ut-uploading:bg-primary/50 ut-button:ut-uploading:after:bg-primary"
+                                 onClientUploadComplete={(res) => {
+                                     setImgUrl(res[0].url)
+                                 }}
+                                 endpoint="imageUploader" 
+                                 onUploadError={(error: Error) => {alert("Error")}}
+                                 />
+                               ) : (
+                                <Image src={imgUrl} alt="Img for reddit" 
+                                width={500} 
+                                height={350}
+                                className="h-80 rounded-lg w-full object-contain"/>
+                               )}
                             </CardHeader>
                         </Card>
 

@@ -4,7 +4,13 @@ const nextConfig = {
         remotePatterns : [{
             hostname: 'avatar.vercel.sh',
             port: "",
-        }]
+        },
+        {
+            hostname: "utfs.io",
+            port: "",
+        }
+    
+    ]
     }
 };
 
